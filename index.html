@@ -4,32 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Password Generator</title>
+    <title>PassGen</title>
 </head>
-<body>
-    <div class="container">
-    <h1>Password Generator</h1>
-    <input type="text" id="showPassword" readonly class="variable">
-    <button id="gen-btn">Generate Password</button><br>
+<body class="glass"> <!-- class will be replaced by JS to 'clean'/'neon'/'dark' etc. -->
+  <div class="wrap" role="main">
+    <!-- LEFT: explanation, controls -->
+    <div class="panel" aria-hidden="false">
+      <p class="title"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-dash" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M5.5 10a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5"/>
+        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+      </svg> PassGen </p>
+      <p class="lead">Generate strong passwords fast. Switch themes, check strength, copy with animations, and toggle dark mode. Built to be responsive and keyboard-friendly.</p>
 
-    <label for="lenght" class="lab">Password Length</label>
-    <input type="number" id="len" min="8" max="64" value="8" class="variable">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+        <div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">Theme</div>
+          <div style="display:flex;gap:8px">
+            <button class="mode-btn" data-theme="clean" aria-pressed="false">Clean</button>
+            <button class="mode-btn" data-theme="glass" aria-pressed="true">Glass</button>
+            <button class="mode-btn" data-theme="dark" aria-pressed="false">Dark</button>
+            <button class="mode-btn" data-theme="neon" aria-pressed="false">Neon</button>
+          </div>
+        </div>
 
-    <label for="lowercase" class="lab">Lowercase</label>
-    <input type="checkbox" id="l-case" checked class="variable">
-    
-    <label for="uppercas" class="lab">Uppercase</label>
-    <input type="checkbox" id="u-case" checked class="variable">
+        <div style="margin-left:auto">
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">Dark Mode</div>
+          <label style="display:inline-flex;align-items:center;gap:8px;cursor:pointer">
+            <input id="darkToggle" type="checkbox" aria-label="Toggle dark mode" />
+            <span class="hint">Enable</span>
+          </label>
+        </div>
+      </div>
 
-    <label for="number" class="lab">Numbers</label>
-    <input type="checkbox" id="num" checked class="variable">
+      <hr style="margin:18px 0;border:0;height:1px;background:rgba(0,0,0,0.04)">
 
-    <label for="symbol" class="lab">Symbols</label>
-    <input type="checkbox" id="sym" class="variable">
-        
+      <p style="margin:0;color:var(--muted)">Tips</p>
+      <ul style="color:var(--muted);margin-top:8px">
+        <li>Use length ≥ 12 for strong passwords.</li>
+        <li>Enable numbers + uppercase for complexity.</li>
+        <li>Use the Neon theme for a hacker aesthetic (fun).</li>
+      </ul>
     </div>
 
+    <!-- RIGHT: main card -->
+    <div class="card" role="region" aria-label="Password generator">
+      <div class="card-header">
+        <div>
+          <h2>Password Generator</h2>
+          <div class="sub">Create secure passwords instantly</div>
+        </div>
 
-  <script src="script.js"></script>  
+        <div class="modes" role="toolbar" aria-label="Theme switcher">
+          <!-- modes will be toggled via the left buttons; this is just visual duplicate -->
+          <button class="mode-btn" id="copyModeVisual" style="display:none">Mode</button>
+        </div>
+      </div>
+
+      <!-- Output row -->
+      <div class="output-row">
+        <input id="passwordOutput" class="output" aria-label="Generated password" placeholder="Your password will appear here" readonly />
+        <button id="copyBtn" class="copy-btn" title="Copy password" aria-live="polite">Copy</button>
+      </div>
+
+      <!-- controls -->
+      <div class="controls" role="group" aria-label="Password options">
+        <input id="lengthInput" type="number" min="4" max="64" value="12" aria-label="Password length" class="focus-ring" />
+        <div style="display:flex;gap:8px;justify-self:end">
+          <button id="generateBtn" class="generate">Generate</button>
+        </div>
+      </div>
+
+      <!-- options -->
+      <div class="options" role="group" aria-label="Character options">
+        <label class="opt"><input id="lowercase" type="checkbox" checked /> Lowercase</label>
+        <label class="opt"><input id="uppercase" type="checkbox" checked /> Uppercase</label>
+        <label class="opt"><input id="numbers" type="checkbox" checked /> Numbers</label>
+        <label class="opt"><input id="symbols" type="checkbox" /> Symbols</label>
+      </div>
+
+      <!-- strength -->
+      <div class="strength" aria-hidden="false">
+        <div class="strength-label" id="strengthLabel">Strength</div>
+        <div class="meter" aria-hidden="true">
+          <i id="meterBar" style="background:var(--weak); width:0%"></i>
+        </div>
+        <div id="entropy" class="hint" style="min-width:56px;text-align:right">—</div>
+      </div>
+
+      <div class="card-foot">
+        <div class="hint">Length: <strong id="lenHint">12</strong></div>
+        <div class="hint">Characters: <span id="charsHint">aA0</span></div>
+      </div>
+    </div>
+  </div>   
+    <script src="script.js"></script>
 </body>
 </html>
