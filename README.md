@@ -20,7 +20,7 @@ A secure and customizable password generator built with "HTML, CSS, and JavaScri
 
 ## Usage
 
-1. "Open `https://safori454.github.io/Password-Generator/` in a browser"  
+1. "Open "https://safori454.github.io/Password-Generator/" in a browser"  
 2. "Select character types"  
 3. "Set password length"  
 4. "Click "Generate""  
@@ -33,6 +33,9 @@ A secure and customizable password generator built with "HTML, CSS, and JavaScri
 ## Quick Setup
 
 No installation required. Clone or download and open `index.html`:
+
+Godfred Safo Ofori 
+Email: gsofori@st.ug.edu.gh
 
 ```bash
 git clone <repository-url>
